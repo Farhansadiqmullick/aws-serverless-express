@@ -1,0 +1,40 @@
+service: lambda-express-api
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: us-east-1
+  environment:
+    NODE_ENV: production
+    API_VERSION: ${env:API_VERSION, '1.0'}
+    APP_NAME: ${env:APP_NAME, 'Lambda Express API'}
+    API_KEY: ${env:API_KEY, ''}
+    SECRET_DATA: ${env:SECRET_DATA, ''}
+
+functions:
+  api:
+    handler: src/handler.handler
+    events:
+      - http:
+          path: /
+          method: get
+          cors: true
+      - http:
+          path: /health
+          method: get
+          cors: true
+      - http:
+          path: /status
+          method: get
+          cors: true
+      - http:
+          path: /protected
+          method: get
+          cors: true
+      - http:
+          path: /{proxy+}
+          method: any
+          cors: true
+
+plugins:
+  - serverless-offline
