@@ -1,3 +1,5 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: farhan24
 service: lambda-express-api
 
 provider:
